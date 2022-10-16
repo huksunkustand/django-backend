@@ -45,7 +45,6 @@ urlpatterns = [
     path('api/',include(router_user.urls)),
     path('api/',include(router_escaneo.urls)),
     path('api/',include(router_servicios.urls)),
- ]  
- # + static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT) 
+ ]  + static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT) 
 
-#  urlpatterns += static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

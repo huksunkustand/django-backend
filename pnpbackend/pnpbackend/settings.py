@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-%=w%mpej=%a5(zd+t+15@9v)^#9rbgcj=zagvtc5-6@^0760g_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = ['127.0.0.1','localhost']
 ALLOWED_HOSTS = ['*']
@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'pnpbackend.urls'
@@ -146,16 +147,17 @@ SIMPLE_JWT = {
       'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
 }
 
-# Configuracion Heroku
-# STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
-# STATIC_TMP = os.path.join(BASE_DIR,'static')
-# STATIC_URL = '/static/'
+#Configuracion Heroku
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+STATIC_TMP = os.path.join(BASE_DIR,'static')
+STATIC_URL = '/static/'
 
-# os.makedirs(STATIC_TMP,exist_ok=True)
-# os.makedirs(STATIC_ROOT,exist_ok=True)
+os.makedirs(STATIC_TMP,exist_ok=True)
+os.makedirs(STATIC_ROOT,exist_ok=True)
 
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR,'static'),
-# )
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR,'static'),
+)
 
 # STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
