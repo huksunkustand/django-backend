@@ -1,0 +1,5 @@
+51962804710:100033890563670:Luis:Romario:male:::::1/1/0001 12:00:00 AM::
+51962804699:100027717951412:Félix:León:male:Huánuco:Huariaca, Pasco, Peru:Married:San Juan Automotriz:2/3/2019 12:00:00 AM::
+51962804694:100016697259378:Lidia:Santacruz Salcedo:female:::::2/16/2019 12:00:00 AM::
+51962804688:100006454534415:Deysi:Chavez Injante:female:Nasca, Ica, Peru::::4/29/2019 12:00:00 AM::
+51962804679:100027679085318:Ida Mariza:Yanac:female:::::2/17/2019 12:00:00 AM::

@@ -310,21 +310,21 @@ class instagramSearchTool:
 # Logica para obtener datos de Instagram v2
 
 	def getInfoInstagram(self,myname):
-		# print("myname=================>:",myname)
+		print("myname=================>:",myname)
 		mysession = myname
 
 		permanent_cookie = "sessionid={}".format(mysession)
 
 		myheaders = {
-			"X-IG-App-ID": "s3wv2g7ivjkrtuu5x72q421kvabmpc0x",
-			"Cookie": 'Wb19vosPNvkiZwrAh8EObASYwv7Q8Nv7',
+			"X-IG-App-ID": "936619743392459",
+			"Cookie": permanent_cookie,
 		}
 		#Consulta el Info profile instagram
 		sample_url = f"https://i.instagram.com/api/v1/users/web_profile_info/?username={myname}"
 		sample = requests.get(sample_url, headers=myheaders)
 		data = json.loads(sample.text)
 		#Guarda el txt
-		with open("D:/Descargas/" + str(myname) + '.txt', 'w', encoding="utf-8") as k:
-			pp = json.dumps(data, indent=4)
-			print(pp, file=k)
+		# with open("C:/Users/Kleiv/OneDrive\Escritorio/Escaneos/ScanPerson-main v2/instagram-scraper-it/principal/Descargas/" + str(myname) + '.txt', 'w', encoding="utf-8") as k:
+		# 	pp = json.dumps(data, indent=4)
+		# 	print(pp, file=k)
 		return(data)
