@@ -6,6 +6,7 @@ from selenium import webdriver
 from dotenv import load_dotenv
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from core.utils import DiccionarioPalabrasDelictivas
 
 load_dotenv()
 
@@ -53,7 +54,7 @@ def getAnalisisPost(self,profile):
     anchors = [a.get_attribute('href') for a in anchors]
     anchors = [a for a in anchors if str(a).startswith("https://www.facebook.com/"+profile+"/posts")]
     # print(anchors)
-    keyWords = ['puta','putísima','Carajo','MIERDA','UPC','cryproot','Device','Developer','Amor','amor','Matar', 'Asesinar', 'Amenazar','Golpear','Pistola','Arma','Arma de fuego','Amor','Violar','Abusar Sexualmente']
+    keyWords =  DiccionarioPalabrasDelictivas()
     arrayData = []
     for post in anchors:
         driver.get(post)
@@ -64,7 +65,7 @@ def getAnalisisPost(self,profile):
         # print(texto)
         palabraEcontrada = ''
         for item in keyWords:    
-            if item in texto:
+            if item.lower() in texto.lower(): 
                 palabraEcontrada = item
         arrayData.append({'urlpost': post, 'publicacion': texto , 'palabraEcontrada': palabraEcontrada})
     return(arrayData)

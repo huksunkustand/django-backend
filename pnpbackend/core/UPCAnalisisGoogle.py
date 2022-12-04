@@ -7,6 +7,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
+from core.utils import DiccionarioPalabrasDelictivas
 
 load_dotenv()
 
@@ -29,7 +30,7 @@ def getAnalisisGoogle(self,name):
     ssl._create_default_https_context = ssl._create_unverified_context
     time.sleep(4)
 
-    keyWords = ['puta','putísima','Carajo','MIERDA','UPC','cryproot','Device','Developer','Amor','amor','Matar', 'Asesinar', 'Amenazar','Golpear','Pistola','Arma','Arma de fuego','Amor','Violar','Abusar Sexualmente']
+    keyWords = DiccionarioPalabrasDelictivas()
     arrayData  = []
 
     for publ in range(1,8):
@@ -41,7 +42,7 @@ def getAnalisisGoogle(self,name):
             descripcion = searchbox2.text
             
             for item in keyWords:    
-                if item in descripcion:
+                if item.lower() in descripcion.lower():
                     palabraencontrada = item
         except NoSuchElementException:  #captura errores
             pass

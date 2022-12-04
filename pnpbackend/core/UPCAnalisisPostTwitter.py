@@ -82,7 +82,7 @@ def getAnalisisPostTwitter(self,nombres):
         anchors =[]
         pass
 
-    keyWords = ['puta','putísima','Carajo','MIERDA','UPC','cryproot','Device','Developer','Amor','amor','Matar', 'Asesinar', 'Amenazar','Golpear','Pistola','Arma','Arma de fuego','Amor','Violar','Abusar Sexualmente']
+    keyWords = ['puta','putísima','Carajo','MIERDA','UPC','cryproot','Device','Developer','Amor','amor','Matar', 'Asesinar', 'Amenazar','Golpear','Pistola','Arma','Arma de fuego','Amor','Violar','Abusar Sexualmente','Marihuana','Amenaza','bandido','HP','asaltar']
     arrayData = []
 
     for post in anchors:

@@ -7,6 +7,8 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
+from core.utils import DiccionarioPalabrasDelictivas
+from core.utils import getInfoInstagram
 load_dotenv()
 
 def getAnalisisInstagramPublicacionesSelenium(self,profile):
@@ -18,8 +20,8 @@ def getAnalisisInstagramPublicacionesSelenium(self,profile):
     chromeOptions.headless = True
     ##########
 
-    driver = webdriver.Chrome('C:\Program Files (x86)\chromedriver.exe', options=chromeOptions)
-    # driver = webdriver.Chrome('C:\Program Files (x86)\chromedriver.exe')
+    # driver = webdriver.Chrome('C:\Program Files (x86)\chromedriver.exe', options=chromeOptions)
+    driver = webdriver.Chrome('C:\Program Files (x86)\chromedriver.exe')
     driver.get("https://www.instagram.com/")
 
     ssl._create_default_https_context = ssl._create_unverified_context
@@ -67,25 +69,37 @@ def getAnalisisInstagramPublicacionesSelenium(self,profile):
         if '/p/' in post:
             posts.append(post)
 
-    keyWords = ['puta','putísima','Carajo','MIERDA','UPC','cryproot','Device','Developer','Amor','amor','Matar', 'Asesinar', 'Amenazar','Golpear','Pistola','Arma','Arma de fuego','Amor','Violar','Abusar Sexualmente']
+    keyWords = DiccionarioPalabrasDelictivas()
     arrayData = []
 
-    if(len(posts) <= 15):
-        try:
-            for soyu in posts:
-                driver.get(soyu)
-                time.sleep(2)
-                texto=driver.find_element(By.XPATH,"//div[contains(@class,'_aa6b _ad9f _aa6d')]")
-                texto=texto.text
-                palabraEcontrada = ''
-                for item in keyWords:    
-                    if item in texto:
-                        palabraEcontrada = item
-                arrayData.append({'Urlphoto': posts, 'Publicacion': texto,'palabraEcontrada':palabraEcontrada})
-                #arrayData.append(texto)
-        except NoSuchElementException:  #Captura exepciones
-            pass
+    texto1=driver.find_element(By.XPATH,"//div[contains(@class,'_aady _aa_s')]//div[contains(@class,'_aa_t')]") 
+    texto1=texto1.text
 
+    if "privada" in texto1.lower():
+        response = getInfoInstagram(profile)
+        arrayData.append({
+            'Urlphoto':  response['data']['user']['profile_pic_url'] if response != '' and ('profile_pic_url' in response['data']['user']) else '',
+            'Publicacion': '',
+            'palabraEcontrada':'',
+            'Privado':'Privado',
+            'biography': response['data']['user']['biography'] if response != '' and ('biography' in response['data']['user']) else '',
+            })
+    else:
+        if(len(posts) <= 15):
+            try:
+                for soyu in posts:
+                    driver.get(soyu)
+                    time.sleep(2)
+                    texto=driver.find_element(By.XPATH,"//div[contains(@class,'_aa6b _ad9f _aa6d')]")
+                    texto=texto.text
+                    palabraEcontrada = ''
+                    for item in keyWords:    
+                        if item in texto:
+                            palabraEcontrada = item
+                    arrayData.append({'Urlphoto': posts, 'Publicacion': texto,'palabraEcontrada':palabraEcontrada})
+                    #arrayData.append(texto)
+            except NoSuchElementException:  #Captura exepciones
+                pass
         else:
             soloimprime15 = posts[:15]
             for soyu in soloimprime15:
@@ -97,5 +111,5 @@ def getAnalisisInstagramPublicacionesSelenium(self,profile):
                 for item in keyWords:    
                     if item in texto:
                         palabraEcontrada = item
-                arrayData.append({'Urlphoto': posts, 'Publicacion': texto,'palabraEcontrada':palabraEcontrada})
-    return(arrayData)
+                arrayData.append({'Urlphoto': posts, 'Publicacion': texto,'palabraEcontrada':palabraEcontrada,'Privado':'Publico','biography':''})
+    return arrayData

@@ -58,7 +58,7 @@ def getAnalisisFotos(self,profile):
         anchors = [a.get_attribute('href') for a in anchors]
         anchors = [a for a in anchors if str(a).startswith("https://www.facebook.com/photo")]
     
-    keyWords = ['puta','putísima','Carajo','MIERDA','UPC','cryproot','Device','Developer','Amor','amor','Matar', 'Asesinar', 'Amenazar','Golpear','Pistola','Arma','Arma de fuego','Amor','Violar','Abusar Sexualmente']
+    keyWords = ['puta','putísima','Carajo','MIERDA','UPC','cryproot','Device','Developer','Amor','amor','Matar', 'Asesinar', 'Amenazar','Golpear','Pistola','Arma','Arma de fuego','Amor','Violar','Abusar Sexualmente','Marihuana','Amenaza','bandido','HP','asaltar']
     arrayData = []
 
     # print("anchors:",anchors)

@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
+from core.utils import FiltrarNombre
 
 load_dotenv()
 
@@ -52,19 +53,35 @@ def getAnalisisPerfilSelenium(self,nombres):
     torres = driver.find_elements("tag name", "image")
     #torres = driver.find_elements("tag name", "image[style='height: 60px; width: 60px;']")
     torres = [image.get_attribute('xlink:href') for image in torres]
-    arrayData1 = [torres[1],torres[2],torres[3],torres[4]]
+    
+    secuencia = 0
+    if  len(torres) == 0:
+        arrayData1 = []
+    elif  len(torres) <= 2:
+        arrayData1 = [torres[1]]
+        secuencia = 2
+    elif len(torres) <= 3:
+        arrayData1 = [torres[1],torres[2]]
+        secuencia = 3
+    elif len(torres) <= 4:
+        arrayData1 = [torres[1],torres[2],torres[3]]
+        secuencia = 4
+    else :
+        arrayData1 = [torres[1],torres[2],torres[3],torres[4]]
+        secuencia = 5
+
     #aqui termina las imagenes
     arrayData  = []
     arrayData3 = []
 
-    for publ in range(1,5):
+    for publ in range(1,secuencia):
         # searchbox1 = driver.find_element(By.XPATH,"//div[contains(@class,'x193iq5w x1xwk8fm')]/div["+str(publ)+"]//div[contains(@class,'xq8finb xl56j7k x78zum5 x1cy8zhl')]/div/a").get_attribute('href')
         searchbox1 = driver.find_element(By.XPATH,"//div[contains(@class,'x193iq5w x1xwk8fm')]/div["+str(publ)+"]//div[contains(@class,'xw7yly9 xktsk01 x1yztbdb x1d52u69')]/div/div/div/div/a").get_attribute('href')
         arrayData.append(searchbox1)
         #nombre
         searchbox2 = driver.find_element(By.XPATH,"//div[contains(@class,'x193iq5w x1xwk8fm')]/div["+str(publ)+"]//div[contains(@class,'xu06os2 x1ok221b')]")
         searchbox2=searchbox2.text
-        arrayData3.append('')
+        arrayData3.append(searchbox2)
 
         time.sleep(1.5)
 
@@ -96,4 +113,5 @@ def getAnalisisPerfilSelenium(self,nombres):
 
     # result = [{"url_profile": a, "profile_picture": b, "username": c , d: "nombres" } for a, b, c,d in zip(arrayData, arrayData1, arrayData2, arrayData3)]
     result = [{"url_profile": a, "profile_picture": b, "username": c, "name": d } for a, b, c, d in zip(arrayData, arrayData1, arrayData2, arrayData3)]
+    # result = FiltrarNombre(name,result)
     return(result)

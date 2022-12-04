@@ -7,6 +7,8 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
+from core.utils import FiltrarNombre
+
 load_dotenv()
 
 def getAnalisisInstagramPerfilSelenium(self,name):
@@ -17,13 +19,14 @@ def getAnalisisInstagramPerfilSelenium(self,name):
     chromeOptions = Options()
     chromeOptions.headless = True
     ##########
-
-    driver = webdriver.Chrome('C:\Program Files (x86)\chromedriver.exe', options=chromeOptions)
-    # driver = webdriver.Chrome('C:\Program Files (x86)\chromedriver.exe')
+    print('ingreso 1')
+    # driver = webdriver.Chrome('C:\Program Files (x86)\chromedriver.exe', options=chromeOptions)
+    driver = webdriver.Chrome('C:\Program Files (x86)\chromedriver.exe')
+    time.sleep(2)
     driver.get("https://www.instagram.com/")
 
     ssl._create_default_https_context = ssl._create_unverified_context
-
+    print('ingreso 2')
     # login
     time.sleep(4)
     username = driver.find_element("css selector", "input[name='username']")
@@ -34,22 +37,26 @@ def getAnalisisInstagramPerfilSelenium(self,name):
     password.send_keys(INSTAGRAM_PASSWORD)
     login = driver.find_element("css selector", "button[type='submit']").click()
 
-    time.sleep(6)
-    nothow = driver.find_element(
-        "xpath", "//button[contains(text(), 'Ahora no')]").click()
-    # turn on notif
-    time.sleep(3)
-    nothow2 = driver.find_element(
-        "xpath", "//button[contains(text(), 'Ahora no')]").click()
+    # time.sleep(6)
+    # nothow = driver.find_element(
+    #     "xpath", "//button[contains(text(), 'Ahora no')]").click()
+    # # turn on notif
+    # time.sleep(3)
+    # nothow2 = driver.find_element(
+    #     "xpath", "//button[contains(text(), 'Ahora no')]").click()
 
-
+    print('Ingreso 1')
     # searchbox
-    time.sleep(3)
+    time.sleep(7)
     searchbox = driver.find_element("css selector", "input[placeholder='Buscar']")
+    print('Ingreso 2')
+    time.sleep(5)
     searchbox.clear()
+    time.sleep(5)
+    print('Ingreso 3')
     searchbox.send_keys(name)
-    time.sleep(2)
-
+    time.sleep(4)
+    print('Ingreso 4')
     #Logica para traer data de los primero 4 perfiles
     arrayData = []
     for publ in range(1,5):
@@ -62,4 +69,5 @@ def getAnalisisInstagramPerfilSelenium(self,name):
             arrayData.append({'username':searchbox1, 'name':searchbox2, 'url_profile': "https://www.instagram.com/"+searchbox1})
         except NoSuchElementException:  #Captura exepciones
             pass
+        # datosFiltrados = FiltrarNombre(name,arrayData)
     return(arrayData)

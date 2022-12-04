@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
-
+from core.utils import DiccionarioPalabrasDelictivas
 load_dotenv()
 
 def getAnalisisPublicacionesFBSelenium(self,nombres,profileId):
@@ -55,7 +55,7 @@ def getAnalisisPublicacionesFBSelenium(self,nombres,profileId):
     anchors = driver.find_elements("tag name", "a")
     anchors = [a.get_attribute('href') for a in anchors]
     anchors = [a for a in anchors if str(a).startswith("https://www.facebook.com/"+profileId+"/posts")]
-    keyWords = ['puta','putísima','Carajo','MIERDA','UPC','cryproot','Device','Developer','Amor','amor','Matar', 'Asesinar', 'Amenazar','Golpear','Pistola','Arma','Arma de fuego','Amor','Violar','Abusar Sexualmente']
+    keyWords = DiccionarioPalabrasDelictivas()
     arrayData = []
 
     for post in anchors:
@@ -70,7 +70,7 @@ def getAnalisisPublicacionesFBSelenium(self,nombres,profileId):
 
         palabraEcontrada = ''
         for item in keyWords:    
-                    if item in texto:
+                    if item.lower() in texto.lower():
                         palabraEcontrada = item
 
         arrayData.append({'Urlphoto': post, 'Publicacion': texto, 'image':images[0],'palabraEcontrada':palabraEcontrada})
